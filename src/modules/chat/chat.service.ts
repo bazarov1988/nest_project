@@ -16,6 +16,8 @@ export class ChatService {
         return this.messageRepository.findOne(id);
     }
 
+    async getMessages(dialod: number, message: number) {}
+
     async createMessage(message) {
         return await this.messageRepository.save(
             this.messageRepository.create(message)
