@@ -2,11 +2,12 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigModule } from './../config';
-import { AuthModule } from './../auth';
-import { ProductsModule } from './../products';
-import { GatewaysModule } from './../gateways';
-import { ChatModule } from './../chat';
+import { ConfigModule } from '../config';
+import { AuthModule } from '../auth';
+import { ProductsModule } from '../products';
+import { GatewaysModule } from '../gateways';
+import { ChatModule } from '../chat';
+import { UserModule } from '../user';
 
 @Module({
   imports: [
@@ -15,7 +16,8 @@ import { ChatModule } from './../chat';
     AuthModule,
     ProductsModule,
     GatewaysModule,
-    ChatModule
+    ChatModule,
+    UserModule
   ],
   controllers: [
     AppController,

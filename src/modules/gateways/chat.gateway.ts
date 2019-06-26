@@ -11,7 +11,7 @@ import {from, Observable, interval} from 'rxjs';
 import {filter, map, take} from 'rxjs/operators';
 import {Client, Server} from 'socket.io';
 
-@WebSocketGateway(8989)
+@WebSocketGateway(8888)
 export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit {
     @WebSocketServer()
     server: Server;
