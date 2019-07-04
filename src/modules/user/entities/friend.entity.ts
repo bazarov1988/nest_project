@@ -34,8 +34,3 @@ export class FriendFillableFields {
     status: number;
 }
 
-export const FRIEND_CONSTANTS = {
-    NEW_REQUEST: 1,
-    CONFIRM: 2,
-    DECLINE: 3
-};

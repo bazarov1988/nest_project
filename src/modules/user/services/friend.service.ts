@@ -1,7 +1,8 @@
 import {Injectable, NotAcceptableException} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
 import {Repository} from 'typeorm';
-import {Friend, FRIEND_CONSTANTS} from '../entities';
+import {Friend} from '../entities';
+import {FRIEND_CONSTANTS} from '../../../constants/constants';
 
 @Injectable()
 export class FriendsService {

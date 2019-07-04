@@ -1,5 +1,6 @@
 import {Entity, Column, PrimaryGeneratedColumn, JoinColumn, OneToOne} from 'typeorm';
-import {User} from "../user";
+import {User} from "../../user";
+import {Dialog} from "./dialog.entity";
 
 @Entity({
     name: 'messages',
@@ -11,14 +12,17 @@ export class Message {
     @Column({length: 255})
     message: string;
 
-    @Column({default: 1})
-    status: number;
+    @OneToOne(type => Dialog)
+    @JoinColumn()
+    dialog: Dialog;
 
     @OneToOne(type => User)
     @JoinColumn()
     sender: User;
 
-    @OneToOne(type => User)
-    @JoinColumn()
-    receiver: User;
+    @Column({default: 1})
+    status: number;
+
+    @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP"})
+    dateCreate: string;
 }

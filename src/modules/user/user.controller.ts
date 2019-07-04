@@ -1,5 +1,5 @@
 import {Controller, Post, Get, Param, Body, UseGuards, Delete} from '@nestjs/common';
-import {JwtAuthGuard} from "../auth";
+import {JwtAuthGuard} from "../auth/jwt-guard";
 import {UsersService, FriendsService} from "./services";
 import {EditProfileDto} from "./dto";
 import {Usr} from '../../decorators';

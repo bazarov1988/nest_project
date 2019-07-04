@@ -9,7 +9,7 @@ import { UserController } from './user.controller'
   imports: [
     TypeOrmModule.forFeature([User, Friend]),
   ],
-  //controllers: [UserController],
+  controllers: [UserController],
   exports: [UsersService,FriendsService],
   providers: [
     UsersService, FriendsService

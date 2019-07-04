@@ -44,15 +44,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect, On
         }
     }
 
-    @SubscribeMessage('events')
-    findAll(client: Client, data: any): Observable<WsResponse<number>> {
-        return from([1, 2, 3]).pipe(
-            filter(item => item % 2 === 1),
-            map(item => ({event: 'events', data: item}))
-        );
-    }
-
-    @SubscribeMessage('identity')
+    @SubscribeMessage('test')
     async identity(client: Client, data: number): Promise<number> {
         return data;
     }
