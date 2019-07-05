@@ -111,6 +111,10 @@ export const NB_CORE_PROVIDERS = [
         baseEndpoint: environment.apiURI + '/auth/',
         login: {
           endpoint: 'login',
+          redirect: {
+            success: 'pages/iot-dashboard',
+            failure: null,
+          },
         },
         register: {
           endpoint: 'register',
