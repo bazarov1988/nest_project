@@ -256,11 +256,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Users',
     icon: 'users',
-    link: '/people',
+    link: '/users',
   },
   {
     title: 'Messages',
     icon: 'messages',
-    link: '/chat',
+    link: '/pages/extra-components/chat',
   },
 ];
