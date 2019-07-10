@@ -20,7 +20,9 @@ import {
   NbToastrModule,
   NbWindowModule,
 } from '@nebular/theme';
-import {AuthInterceptor} from './services/auth/HttpInterceptor'
+import {AuthInterceptor} from './services/auth/HttpInterceptor';
+import {AuthGuard} from './guards/AuthGuard';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -29,9 +31,7 @@ import {AuthInterceptor} from './services/auth/HttpInterceptor'
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
-
     ThemeModule.forRoot(),
-
     NbSidebarModule.forRoot(),
     NbMenuModule.forRoot(),
     NbDatepickerModule.forRoot(),
@@ -44,6 +44,7 @@ import {AuthInterceptor} from './services/auth/HttpInterceptor'
     CoreModule.forRoot(),
   ],
   providers: [
+    AuthGuard,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

@@ -12,8 +12,7 @@ export class AuthService {
 
   login(email: string, password: string) {
     return this.http.post<any>(environment.apiURI + '/api/login', {email, password})
-      .do(res => this.setSession)
-      .shareReplay();
+      .subscribe(res=>this.setSession(res))
   }
 
   private setSession(authResult) {
