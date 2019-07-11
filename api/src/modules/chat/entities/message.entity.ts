@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn, JoinColumn, OneToOne} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, JoinColumn, ManyToOne} from 'typeorm';
 import {User} from "../../user";
 import {Dialog} from "./dialog.entity";
 
@@ -12,11 +12,11 @@ export class Message {
     @Column({length: 255})
     message: string;
 
-    @OneToOne(type => Dialog)
+    @ManyToOne(type => Dialog)
     @JoinColumn()
     dialog: Dialog;
 
-    @OneToOne(type => User)
+    @ManyToOne(type => User)
     @JoinColumn()
     sender: User;
 

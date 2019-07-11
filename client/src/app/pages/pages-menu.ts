@@ -249,14 +249,14 @@ export const MENU_ITEMS_OLD: NbMenuItem[] = [
 
 export const MENU_ITEMS: NbMenuItem[] = [
   {
-    title: 'IoT Dashboard',
+    title: 'Dashboard',
     icon: 'home-outline',
     link: '/pages/iot-dashboard',
   },
   {
     title: 'Users',
     icon: 'users',
-    link: '/users',
+    link: '/pages/users',
   },
   {
     title: 'Messages',

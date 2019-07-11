@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn, JoinColumn, OneToOne} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, JoinColumn, OneToOne, ManyToOne} from 'typeorm';
 import {User} from "../../user/entities";
 import {Message} from "./message.entity";
 
@@ -9,11 +9,11 @@ export class UserMessages {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @OneToOne(type => User)
+    @ManyToOne(type => User)
     @JoinColumn()
     user: User;
 
-    @OneToOne(type => Message)
+    @ManyToOne(type => Message)
     @JoinColumn()
     message: Message;
 

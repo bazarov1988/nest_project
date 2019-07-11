@@ -5,7 +5,7 @@ import {EditProfileDto} from "./dto";
 import {Usr} from '../../decorators';
 import {ApiResponse} from "@nestjs/swagger";
 
-@Controller('user-controller')
+@Controller('user')
 @UseGuards(JwtAuthGuard)
 export class UserController {
     constructor(
@@ -14,15 +14,20 @@ export class UserController {
     ) {
     }
 
-    @Get(':id')
-    async getProfile(@Param('id') id: number) {
-        return await this.userService.get(id)
+    @Get()
+    async getProfiles() {
+        return await this.userService.getAll();
     }
 
-    @Get('my-profile')
+    @Get('profile')
     @ApiResponse({status: 201, description: 'Successful Request'})
     async getMyProfile(@Usr() currentUser) {
         return await this.userService.get(currentUser.id)
+    }
+
+    @Get(':id')
+    async getProfile(@Param('id') id: number) {
+        return await this.userService.get(id)
     }
 
     @Post()

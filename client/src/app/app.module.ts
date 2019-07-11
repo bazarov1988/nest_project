@@ -23,7 +23,6 @@ import {
 import {AuthInterceptor} from './services/auth/HttpInterceptor';
 import {AuthGuard} from './guards/AuthGuard';
 
-
 @NgModule({
   declarations: [AppComponent],
   imports: [

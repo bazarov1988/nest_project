@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn, JoinColumn, OneToOne} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, JoinColumn, OneToOne, ManyToOne} from 'typeorm';
 import {User} from "../../user";
 
 @Entity({
@@ -14,10 +14,7 @@ export class Dialog {
     @Column({default: 1})
     status: number;
 
-    @Column()
-    unreadMessages: number;
-
-    @OneToOne(type => User)
+    @ManyToOne(type => User)
     @JoinColumn()
     creator: User;
 

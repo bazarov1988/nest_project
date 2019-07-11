@@ -4,7 +4,6 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '../config';
 import { AuthModule } from '../auth';
-import { ProductsModule } from '../products';
 import { GatewaysModule } from '../gateways';
 import { ChatModule } from '../chat';
 import { UserModule } from '../user';
@@ -14,7 +13,6 @@ import { UserModule } from '../user';
     TypeOrmModule.forRoot(),
     ConfigModule,
     AuthModule,
-    ProductsModule,
     GatewaysModule,
     ChatModule,
     UserModule
