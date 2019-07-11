@@ -40,7 +40,6 @@ export class ChatController {
         return this.chatService.createMessage(messagePayload);
     }
 
-
     //send new message via form
     @Post('send-custom-message')
     @ApiResponse({status: 201, description: 'Successful Request'})
@@ -48,26 +47,38 @@ export class ChatController {
         const receiver = payload.user;
         const sender = user.id;
         const messagePayload = {
-            senderId: sender,
+            sender: sender,
             message: payload.message,
             status: MESSAGES_CONSTANTS.NEW_MESSAGE
         };
         const receiverObj = await this.userService.get(receiver);
         if (sender && receiver && receiverObj) {
-            let dialog = this.chatService.getDialogByUsers(sender, receiver);
+            let dialog = await this.chatService.getDialogByUsers(sender, receiver);
             if (dialog) {
-                messagePayload['dialogId'] = dialog['id'];
+                this.chatService.updateDialogMessageCounter(dialog, sender);
+                messagePayload['dialog'] = dialog['id'];
+                return this.chatService.createMessage(messagePayload);
             } else {
                 let dialog = await this.chatService.createDialog({
                     name: 'users_dialog',
-                    creatorId: sender
+                    creator: sender
                 });
-                messagePayload['dialogId'] = dialog['id'];
+                if (dialog['id']) {
+                    [sender, receiver].map(async userId => {
+                        await this.chatService.assignDialog({
+                            user: userId,
+                            dialog: dialog['id'],
+                            messages: userId === sender ? 0 : 1
+                        });
+                    });
+                }
+                messagePayload['dialog'] = dialog['id'];
+                return this.chatService.createMessage(messagePayload);
             }
         } else {
             throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
         }
-        return this.chatService.createMessage(messagePayload);
+
     }
 
     //Get list of messages

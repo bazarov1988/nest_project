@@ -1,6 +1,6 @@
 import {Injectable, NotAcceptableException} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
-import {Repository, getRepository} from 'typeorm';
+import {Repository, getRepository, getConnection} from 'typeorm';
 import {Message, UserMessages, Dialog, UserDialogs} from "./entities";
 import {MESSAGES_CONSTANTS, DIALOG_CONSTANTS} from "../../constants/constants";
 
@@ -28,9 +28,12 @@ export class ChatService {
     }
 
     async getDialogByUsers(sender: number, receiver: number) {
-        return await getRepository(Dialog).createQueryBuilder('d').select('d.*')
-            .innerJoin('user_dialogs', 'u_d', 'd.id=u_d.dialogId')
-            .where(`(d.creatorId=${sender} and u_d.userId=${receiver}) OR (d.creatorId=${receiver} and u_d.userId=${sender})`).getOne();
+        return await getRepository(Dialog)
+            .createQueryBuilder('d')
+            .select('d')
+            .innerJoin('users_dialogs', 'u_d', 'd.id=u_d.dialogId')
+            .where(`(d.creatorId=${sender} and u_d.userId=${receiver}) OR (d.creatorId=${receiver} and u_d.userId=${sender})`)
+            .getOne();
     }
 
     async getUserMessage(messageId: number, userId: number) {
@@ -48,8 +51,8 @@ export class ChatService {
     }
 
     async createDialog(dialog) {
-        return await this.messageRepository.save(
-            this.messageRepository.create(dialog)
+        return await this.dialogRepository.save(
+            this.dialogRepository.create(dialog)
         );
     }
 
@@ -63,7 +66,7 @@ export class ChatService {
         if (message.senderId === user) {
             return await this.messageRepository.update(message.id, {status: MESSAGES_CONSTANTS.DELETED_MESSAGE})
         } else {
-            const userMessage = this.getUserMessage(message.id, user);
+            const userMessage = await this.getUserMessage(message.id, user);
             if (userMessage) {
                 return await this.userMessagesRepository.update(userMessage['id'], {status: MESSAGES_CONSTANTS.DELETED_MESSAGE})
             } else {
@@ -106,14 +109,19 @@ export class ChatService {
         }
     }
 
-    async updateDialogMessageCounter(id: number, creator: number) {
-        const dialog = await this.getDialog(id);
-        if (dialog && dialog['creatorId'] === creator) {
-            return await this.dialogRepository.update({id}, {unreadMessages: dialog.unreadMessages++})
+    async updateDialogMessageCounter(dialog, sender) {
+        if (dialog) {
+            return await getConnection()
+                .createQueryBuilder()
+                .update(UserDialogs)
+                .set({messages: () => 'messages+1'})
+                .where(`dialogId=${dialog.id} and userId!=${sender}`)
+                .execute()
         } else {
             throw new NotAcceptableException(
                 'Something went wrong'
             );
         }
     }
+
 }
